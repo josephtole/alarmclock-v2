@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+icalendar = "*"
+recurring-ical-events = "==1.0.1b0"
+gpiozero = "*"
+httplib2 = "*"
+python-dotenv = "*"
+humanize = "*"
+
+[dev-packages]
+ipython = "*"
+jupyter = "*"
+
+[requires]
+python_version = "3.9"

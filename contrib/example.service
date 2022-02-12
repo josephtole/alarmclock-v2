@@ -1,0 +1,13 @@
+[Unit]
+Description=Alarm Clock
+
+[Service]
+Environment="ALARMCLOCK_URL=https://example.com/basic.ics"
+User=pi
+Restart=always
+Type=simple
+WorkingDirectory=/home/pi
+ExecStart=/usr/local/bin/pipenv run python3 /home/pi/alarmclock/alarmclock.py
+
+[Install]
+WantedBy=multi-user.target
