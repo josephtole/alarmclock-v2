@@ -6,8 +6,8 @@ After=network.target
 User=pi
 Restart=always
 Type=simple
-WorkingDirectory=/home/pi/alarmclock
-ExecStart=/usr/local/bin/pipenv run python3 /home/pi/alarmclock/alarmclock.py
+WorkingDirectory=/home/pi/alarmclock-v2
+ExecStart=/usr/local/bin/pipenv run python3 /home/pi/alarmclock-v2/alarmclock.py
 
 [Install]
 WantedBy=multi-user.target
