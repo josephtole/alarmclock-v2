@@ -103,7 +103,7 @@ if __name__ == "__main__":
   logging.basicConfig(format=args.log_format, level=args.log_level)
   logging.debug(f"args: {args}")
 
-  if args.log_level == "DEBUG:"
+  if args.log_level == "DEBUG":
     for x in is.environ:
     logging.debug(f"{x}: {os.environ[x]}")
 
