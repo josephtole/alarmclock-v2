@@ -104,8 +104,8 @@ if __name__ == "__main__":
   logging.debug(f"args: {args}")
 
   if args.log_level == "DEBUG":
-    for x in is.environ:
-    logging.debug(f"{x}: {os.environ[x]}")
+    for x in os.environ:
+      logging.debug(f"{x}: {os.environ[x]}")
 
   if os.getenv('ALARMCLOCK_URL') == None:
       logging.error('URL for ics file must be provided in environment variable ALARMCLOCK_URL')
