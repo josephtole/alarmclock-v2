@@ -1,12 +1,12 @@
 [Unit]
 Description=Alarm Clock
+After=network.target
 
 [Service]
-Environment="ALARMCLOCK_URL=https://example.com/basic.ics"
 User=pi
 Restart=always
 Type=simple
-WorkingDirectory=/home/pi
+WorkingDirectory=/home/pi/alarmclock
 ExecStart=/usr/local/bin/pipenv run python3 /home/pi/alarmclock/alarmclock.py
 
 [Install]
