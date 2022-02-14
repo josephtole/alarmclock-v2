@@ -10,6 +10,7 @@ gpiozero = "*"
 httplib2 = "*"
 python-dotenv = "*"
 humanize = "*"
+"rpi.gpio" = "*"
 
 [dev-packages]
 ipython = "*"
