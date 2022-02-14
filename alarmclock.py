@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import argparse
 import time
@@ -5,7 +7,7 @@ import logging
 from datetime import datetime as dt
 from datetime import timedelta as td
 
-from gpiozero import OutputDevice
+from gpiozero import OutputDevice, Button
 import icalendar
 import recurring_ical_events
 import urllib.request
@@ -74,8 +76,7 @@ if __name__ == "__main__":
   logging.debug("Starting core code...")
 
   load_dotenv()
-  
-  # cal = None
+
   next_alarm = 0
 
   parser = argparse.ArgumentParser(
@@ -102,8 +103,12 @@ if __name__ == "__main__":
   logging.basicConfig(format=args.log_format, level=args.log_level)
   logging.debug(f"args: {args}")
 
+  if args.log_level == "DEBUG:"
+    for x in is.environ:
+    logging.debug(f"{x}: {os.environ[x]}")
+
   if os.getenv('ALARMCLOCK_URL') == None:
-      logging.error('ICS url must be provided in environment variable ALARMCLOCK_URL')
+      logging.error('URL for ics file must be provided in environment variable ALARMCLOCK_URL')
       exit(1)
 
   url = os.getenv('ALARMCLOCK_URL')
