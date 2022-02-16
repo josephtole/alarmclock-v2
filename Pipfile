@@ -16,6 +16,7 @@ importlib-metadata = "*"
 [dev-packages]
 ipython = "*"
 jupyter = "*"
+black = "*"
 
 [requires]
 python_version = "3"
