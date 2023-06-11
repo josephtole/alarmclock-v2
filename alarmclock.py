@@ -83,14 +83,6 @@ def show_summary(events=None):
 
 
 if __name__ == "__main__":
-    # Style: usually you would put all program logic in a function and
-    # call it from here after doing arg-parsing and log setup etc.
-    # Typically called main() or similar.
-    # That allows you to import this module and call the program logic from another
-    # script if you want, which is difficult if it's all in the `if name is __main__`
-    # block.
-    # logging.debug("Starting core code...")
-
     load_dotenv()
 
     next_alarm = 0
@@ -111,15 +103,6 @@ if __name__ == "__main__":
         "and https://docs.python.org/3.7/library/logging.html#logrecord-attributes",
     )
     args = parser.parse_args()
-
-    # # This seems to solve a bug
-    # # This is because you're executing logging.debug() above.  If there are no
-    # # handlers configured when the first log message is emitted, a default
-    # # handler/formatter is assigned.
-    # # If you wait to log until you've called logging.basicConfig() you won't
-    # # need this.
-    # for handler in logging.root.handlers[:]:
-    #     logging.root.removeHandler(handler)
 
     logging.basicConfig(format=args.log_format, level=args.log_level)
     logging.debug(f"args: {args}")
