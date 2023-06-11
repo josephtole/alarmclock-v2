@@ -12,6 +12,7 @@ python-dotenv = "*"
 humanize = "*"
 "rpi.gpio" = "*"
 importlib-metadata = "*"
+prometheus-client = "*"
 
 [dev-packages]
 ipython = "*"
