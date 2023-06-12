@@ -6,24 +6,26 @@ import time
 import logging
 from datetime import datetime as dt
 from datetime import timedelta as td
+from urllib.request import urlopen
+
 
 from gpiozero import OutputDevice, Button
 import icalendar
 import recurring_ical_events
-import urllib.request
 from dotenv import load_dotenv
 import humanize
 import pytz
+from prometheus_client import start_http_server, Counter, Gauge
+
+
+urllib_response = Counter('url_response', 'Responses from urllib', ['status'])
+urllib_timeout = Counter('url_timeout', 'Timeouts from urllib')
 
 
 def update_events(url=None):
     logging.debug("Executing update_events()")
-    # Also, is failing to receive a URL expected/normal behaviour?
-    # If not - if it's only checking for a bug condition etc - just throw an
-    # exception instead of returning a different result signature
     if not url:
-        logging.error("updated_events() did not receive `url` (None)")
-        return None
+        raise ValueError("updated_events() did not receive `url` (None)")
 
     sleep_time = int(os.getenv("ALARMCLOCK_REFRESH_FREQUENCY", 300))
     events = None
@@ -33,14 +35,18 @@ def update_events(url=None):
         end_date = dt.now() + td(days=7)
 
         try:
-            ical_string = urllib.request.urlopen(url).read()
-        except:
-            pass
+            with urlopen(url, timeout=5) as r:
+                ical_string = r.read()
+                urllib_response.labels(status=r.status).inc()
+        except TimeoutError:
+            urllib_timeout.inc()
+            logging.error(f"Timeout for url {url}")
+            return None
+        except urllib.error.HTTPError as e:
+            urllib_response.labels(status=e.status).inc()
+            logging.error(f"HTTP Error for url {url}: {e.status}")
+            return None
 
-        # this will throw an unboundlocalerror or nameerror if the urllib
-        # request above fails.
-        # You might want to make the except clause just return instead of
-        # continuing
         calendar = icalendar.Calendar.from_ical(ical_string)
         events = recurring_ical_events.of(calendar).between(start_date, end_date)
         events.sort(key=lambda date: date["DTSTART"].dt)
@@ -83,6 +89,7 @@ def show_summary(events=None):
 
 
 if __name__ == "__main__":
+    start_http_server(8000)
     load_dotenv()
 
     next_alarm = 0
